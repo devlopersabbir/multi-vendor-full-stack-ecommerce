@@ -9,6 +9,16 @@ export class WishList extends Modal {
   user: User;
 
   @ManyToMany(() => Product)
-  @JoinTable()
+  @JoinTable({
+    name: "wishList_&_product",
+    joinColumn: {
+      name: "wish_uuid",
+      referencedColumnName: "uuid",
+    },
+    inverseJoinColumn: {
+      name: "product_uuid",
+      referencedColumnName: "uuid",
+    },
+  })
   products: Product[];
 }

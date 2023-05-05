@@ -10,7 +10,17 @@ export class Order extends Modal {
   user: User;
 
   @ManyToMany(() => Product)
-  @JoinTable()
+  @JoinTable({
+    name: "product_&_order",
+    joinColumn: {
+      name: "product_uuid",
+      referencedColumnName: "uuid",
+    },
+    inverseJoinColumn: {
+      name: "order_uuid",
+      referencedColumnName: "uuid",
+    },
+  })
   products: Product[];
 
   @Column()

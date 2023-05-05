@@ -11,13 +11,13 @@ import { Category } from "./entity/category/Category";
 import { Review } from "./entity/reviews/Reviews";
 
 export const AppDataSource = new DataSource({
-  type: "mysql",
+  type: "postgres",
   host: "localhost",
-  port: 3306,
+  port: 5432,
   username: process.env.DB_USERNAME,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  synchronize: false,
+  synchronize: true,
   logging: false,
   entities: [User, Product, Order, WishList, Cart, Category, Review],
 });
