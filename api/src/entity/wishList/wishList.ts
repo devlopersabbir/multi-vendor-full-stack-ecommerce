@@ -1,4 +1,4 @@
-import { Entity, JoinTable, ManyToMany, ManyToOne } from "typeorm";
+import { Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne } from "typeorm";
 import Modal from "../Modal";
 import { User } from "../users/User";
 import { Product } from "../product/Products";
@@ -6,6 +6,10 @@ import { Product } from "../product/Products";
 @Entity("wishList")
 export class WishList extends Modal {
   @ManyToOne(() => User, (user) => user.wishList)
+  @JoinColumn({
+    name: "userUuid",
+    referencedColumnName: "uuid",
+  })
   user: User;
 
   @ManyToMany(() => Product)

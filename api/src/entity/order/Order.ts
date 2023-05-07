@@ -1,4 +1,11 @@
-import { Column, Entity, JoinTable, ManyToMany, ManyToOne } from "typeorm";
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  JoinTable,
+  ManyToMany,
+  ManyToOne,
+} from "typeorm";
 import Modal from "../Modal";
 import { User } from "../users/User";
 import { Product } from "../product/Products";
@@ -7,6 +14,10 @@ import { OrderStatus } from "../../utils/enum/enum";
 @Entity("order")
 export class Order extends Modal {
   @ManyToOne(() => User, (user) => user.orders)
+  @JoinColumn({
+    name: "userUuid",
+    referencedColumnName: "uuid",
+  })
   user: User;
 
   @ManyToMany(() => Product)

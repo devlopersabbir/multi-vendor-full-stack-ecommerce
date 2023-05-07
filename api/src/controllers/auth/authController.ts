@@ -1,50 +1,94 @@
 import { Request, Response } from "express";
 import { User } from "../../entity/users/User";
-import { hash } from "bcrypt";
+import { compare } from "bcrypt";
+import { sendResponseWithJwt } from "../../services/function";
+import { JwtPayload, verify } from "jsonwebtoken";
+import JWT from "../../services/jwt";
 
 class Controller {
   /**
-   * API URL => /api/v1/auth/register
+   * For Login
+   * API URL => /api/v1/auth/login
    * METHOD => POST
    * ADMIN | CUSTOMER | VENDOR
    */
-  public static async store(req: Request, res: Response) {
-    const { name, email, password, phone, address, role } = req.body;
-    const isUser = await User.findOneBy({
-      email,
-    });
-    if (isUser) return res.status(400).json({ message: "Email already used!" });
-    const bcryptPassword = await hash(password, 11);
-    if (!bcryptPassword)
-      return res.status(500).json({ message: "Fail to hash password!" });
+  public static async login(req: Request, res: Response) {
+    const { email, password } = req.body;
+    if (!email || !password)
+      return res.status(400).json({ message: "Email & Password Required!" });
 
     try {
-      const user = User.create({
-        name,
-        email,
-        password: bcryptPassword,
-        phone,
-        address,
-        role,
-      });
-      await user.save();
-      res.status(201).json({ message: "Account created successfull!" });
+      const user = await User.findOneBy({ email });
+      if (!user) return res.status(404).json({ message: "Wrong email!" });
+      const isPassMatch = await compare(password, user.password);
+      if (!isPassMatch)
+        return res.status(400).json({ message: "Wrong password!" });
+
+      sendResponseWithJwt(res, user, `Welcome ${user.name}`);
     } catch (error) {
-      res.status(500).json({ message: "Sarver is not working!", error });
+      res.status(500).json({ message: "Server not responding..." });
     }
   }
 
   /**
-   * API URL => /api/v1/auth/register
+   * For Logout
+   * API URL => /api/v1/auth/logout
    * METHOD => POST
    * ADMIN | CUSTOMER | VENDOR
    */
-  public static async get(req: Request, res: Response) {
+  public static async logout(req: Request, res: Response) {
+    if (!req.cookies?.token)
+      return res.status(204).json({ message: "Sesssion expaire!" });
+
+    res.clearCookie("token", {
+      httpOnly: true,
+      secure: true,
+      sameSite: "none",
+    });
+
+    res.status(200).json({ message: "You are logged out" });
+  }
+
+  /**
+   * Generate a refresh token
+   * API URL => /api/v1/auth/refresh-token
+   * METHOD => GET
+   * ADMIN | CUSTOMER | VENDOR
+   */
+  public static async refresh(req: Request, res: Response) {
+    const token = req.cookies?.token;
+    if (!token) return res.status(401).json({ message: "Unauthorized" });
     try {
-      const users = await User.find();
-      res.status(200).json(users);
+      verify(
+        token,
+        process.env.REFRESH_TOKEN_SECRET as string,
+        async (error: any, decoded: any) => {
+          if (error) return res.status(403).json({ message: "Forbidden" });
+          const user = await User.findOneByOrFail({
+            uuid: decoded?.uuid,
+          });
+          if (!user) return res.status(401).json({ message: "Unauthorized" });
+
+          const payload: JwtPayload = {
+            id: user.id,
+            uuid: user.uuid,
+            name: user.name,
+            email: user.email,
+            role: user.role,
+            phone: user.phone,
+            address: user.address,
+          };
+          const accessToken = JWT.generateAccessToken(payload);
+          if (!accessToken)
+            return res
+              .status(400)
+              .json({ message: "Fail to generate access token!" });
+
+          res.json({ accessToken, user });
+        }
+      );
     } catch (error) {
-      res.status(500).json({ message: "Sarver is not working!", error });
+      res.status(500).json({ message: "Operation fail" });
     }
   }
 }

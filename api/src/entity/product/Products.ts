@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, OneToMany } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany } from "typeorm";
 import Modal from "../Modal";
 import { User } from "../users/User";
 import { Category } from "../category/Category";
@@ -6,8 +6,11 @@ import { Review } from "../reviews/Reviews";
 
 @Entity("products")
 export class Product extends Modal {
-  @Column({ unique: true })
+  @Column()
   name: string;
+
+  @Column({ unique: true })
+  slug: string;
 
   @Column({ type: "text", nullable: false })
   shortDescription: string;
@@ -22,9 +25,17 @@ export class Product extends Modal {
   quantity: number;
 
   @ManyToOne(() => User, (user) => user.products)
+  @JoinColumn({
+    name: "userUuid",
+    referencedColumnName: "uuid",
+  })
   user: User;
 
   @ManyToOne(() => Category, (category) => category.products)
+  @JoinColumn({
+    name: "categoryUuid",
+    referencedColumnName: "uuid",
+  })
   category: Category;
 
   @OneToMany(() => Review, (review) => review.product)

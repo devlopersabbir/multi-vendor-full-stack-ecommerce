@@ -6,6 +6,10 @@ import { Product } from "../product/Products";
 @Entity("cart")
 export class Cart extends Modal {
   @ManyToOne(() => User, (user) => user.carts)
+  @JoinColumn({
+    name: "userUuid",
+    referencedColumnName: "uuid",
+  })
   user: User;
 
   @ManyToMany(() => Product)

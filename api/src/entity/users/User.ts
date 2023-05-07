@@ -18,6 +18,9 @@ export class User extends Modal {
   @Column()
   password: string;
 
+  @Column({ nullable: true })
+  image?: string;
+
   @Column({ unique: true, nullable: true })
   phone: string;
 
@@ -25,7 +28,7 @@ export class User extends Modal {
   address: string;
 
   @Column({ type: "enum", enum: Role, default: Role.CUSTOMER })
-  role: string;
+  role?: string;
 
   @OneToMany(() => Product, (product) => product.user)
   products: Product[];

@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne } from "typeorm";
 import Modal from "../Modal";
 import { User } from "../users/User";
 import { Product } from "../product/Products";
@@ -12,8 +12,16 @@ export class Review extends Modal {
   comment: string;
 
   @ManyToOne(() => User, (user) => user.reviews)
+  @JoinColumn({
+    name: "userUuid",
+    referencedColumnName: "uuid",
+  })
   user: User;
 
   @ManyToOne(() => Product, (product) => product.reviews)
+  @JoinColumn({
+    name: "productUuid",
+    referencedColumnName: "uuid",
+  })
   product: Product;
 }
