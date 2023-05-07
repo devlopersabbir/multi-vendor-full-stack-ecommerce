@@ -15,9 +15,12 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-hot-toast";
 import { axiosPublic } from "../../utils/axios/axios";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/slices/authSlice";
 
 const Login = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
@@ -28,6 +31,7 @@ const Login = () => {
         .then((res) => res.data),
     onSuccess: (data: any) => {
       toast.success(data?.message);
+      dispatch(login({ accessToken: data?.accessToken, user: data?.user }));
       navigate("/dashboard");
     },
 

@@ -21,6 +21,7 @@ export const sendResponseWithJwt = (
   const accessToken = JWT.generateAccessToken(payload);
   const refreshToken = JWT.generateRefreshToken(payload);
 
+  console.log("function: ", refreshToken);
   res.cookie("token", refreshToken, {
     maxAge: 24 * 60 * 60 * 1000,
     httpOnly: true,

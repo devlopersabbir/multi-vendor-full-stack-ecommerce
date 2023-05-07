@@ -6,3 +6,8 @@ export const axiosPublic = axios.create({
   baseURL,
   withCredentials: true,
 });
+
+export const axiosPrivete = axios.create({
+  baseURL,
+  withCredentials: true,
+});

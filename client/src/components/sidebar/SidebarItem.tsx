@@ -79,16 +79,16 @@ const MenuItem: React.FunctionComponent<TMenuItemProps> = ({
       to={link}
       as={Link}
       _hover={{
-        bg: "secondary.100",
-        color: "white",
+        bg: "gray.200",
+        color: "gray.900",
       }}
       transition="ease .3s all"
       align="center"
       padding="10px"
       cursor="pointer"
       w="full"
-      bg={active ? "secondary.100" : "white"}
-      color={active ? "white" : "#2C3A4B"}
+      bg={active ? "gray.300" : "white"}
+      color={active ? "gray.900" : "gray.900"}
       borderRadius={navSize === 260 ? "5px" : "10px"}
       justifyContent={navSize === 90 ? "center" : "space-between"}
     >
@@ -118,16 +118,18 @@ const SubmenuItem: React.FunctionComponent<TSidebarItemProps> = ({
           <>
             <Flex
               _hover={{
-                bg: "secondary.100",
-                color: "white",
+                bg: "gray.200",
+                color: "gray.900",
               }}
               width="full"
               transition="ease .3s all"
               align="center"
               padding="10px"
               cursor="pointer"
-              bg={isExpanded ? "secondary.100" : "white"}
-              color={isExpanded ? "white" : "#2C3A4B"}
+              // bg={isExpanded ? "secondary.100" : "white"}
+              // color={isExpanded ? "white" : "#2C3A4B"}
+              bg={isExpanded ? "gray.300" : "white"}
+              color={isExpanded ? "gray.900" : "gray.900"}
               borderRadius={"5px"}
               justifyContent={navSize === 90 ? "center" : "space-between"}
               as={AccordionButton}

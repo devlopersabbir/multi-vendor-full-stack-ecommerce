@@ -4,8 +4,7 @@ import { useDispatch } from "react-redux";
 const useRefresh = () => {
   const dispatch = useDispatch();
   const refresh = async () => {
-    const { data } = await axiosPublic.get("/api/v1/auth/refresh");
-    console.log("From refresh token hooks: ", data);
+    const { data } = await axiosPublic.get("/api/v1/auth/refresh-token");
     dispatch(login({ accessToken: data?.accessToken, user: data?.user }));
     const token = data.accessToken;
     return token;

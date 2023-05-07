@@ -1,5 +1,6 @@
 import {
   Flex,
+  Heading,
   Icon,
   IconButton,
   Image,
@@ -10,13 +11,14 @@ import { AiOutlineUser } from "react-icons/ai";
 import { BsCoin, BsPeople } from "react-icons/bs";
 import { FiFile, FiMenu } from "react-icons/fi";
 import { IoWalletOutline, IoSettingsOutline } from "react-icons/io5";
-import { RiFileList3Line } from "react-icons/ri";
+import { RiFileList3Line, RiProductHuntLine } from "react-icons/ri";
 import { RxDashboard } from "react-icons/rx";
 import { TfiWorld } from "react-icons/tfi";
 import { TbLicense } from "react-icons/tb";
 import { HiOutlineOfficeBuilding } from "react-icons/hi";
 
 import SidebarItem from "./SidebarItem";
+import { Link } from "react-router-dom";
 
 const Sidebar = () => {
   const [navSize, setNavSize] = useState<90 | 260>(260);
@@ -40,10 +42,10 @@ const Sidebar = () => {
         justify={navSize === 260 ? "space-between" : "center"}
         height="90px"
       >
-        <Image
+        {/* <Image
           src="/img/logo.png"
           display={navSize === 90 ? "none" : "unset"}
-        />
+        /> */}
         <IconButton
           aria-label="toggle"
           variant="ghost"
@@ -79,53 +81,17 @@ const Sidebar = () => {
           icon={<Icon as={RxDashboard} fontSize="24px" />}
           text="Dashboard"
         />
-          <SidebarItem
-            navSize={navSize}
-            link="/office"
-            icon={<Icon as={HiOutlineOfficeBuilding} fontSize="24px" />}
-            text="Office"
-          />
         <SidebarItem
           navSize={navSize}
-          link="/accounts"
-          icon={<Icon as={IoWalletOutline} fontSize="24px" />}
-          text="Bank Accounts"
-          active
-          submenu={[
-            { text: "Account", link: "/accounts" },
-            { text: "Withdrawal", link: "/withdrawal" },
-            { text: "Deposit", link: "/deposit" },
-          ]}
+          link="/users"
+          icon={<Icon as={BsPeople} fontSize="24px" />}
+          text="User"
         />
         <SidebarItem
           navSize={navSize}
-          link="/license"
-          icon={<Icon as={TbLicense} fontSize="24px" />}
-          text="License"
-        />
-        <SidebarItem
-          navSize={navSize}
-          link="/muallem"
-          icon={<Icon as={AiOutlineUser} fontSize="24px" />}
-          text="Muallem"
-        />
-        <SidebarItem
-          navSize={navSize}
-          link="/income"
-          icon={<Icon as={BsCoin} fontSize="24px" />}
-          text="Income"
-        />
-        <SidebarItem
-          navSize={navSize}
-          link="/expense"
-          icon={<Icon as={BsCoin} fontSize="24px" />}
-          text="Expense"
-        />
-        <SidebarItem
-          navSize={navSize}
-          link="/invoice"
-          icon={<Icon as={RiFileList3Line} fontSize="24px" />}
-          text="Invoice"
+          link="/products"
+          icon={<Icon as={RiProductHuntLine} fontSize="24px" />}
+          text="Products"
         />
         <SidebarItem
           navSize={navSize}
@@ -144,26 +110,15 @@ const Sidebar = () => {
             { text: "Messages", link: "/website/message" },
           ]}
         />
-          <SidebarItem
-            navSize={navSize}
-            link="/users"
-            icon={<Icon as={BsPeople} fontSize="24px" />}
-            text="User"
-          />
+
         <SidebarItem
           navSize={navSize}
-          link="/report"
-          icon={<Icon as={FiFile} fontSize="24px" />}
-          text="Report"
+          link="/settings"
+          icon={<Icon as={IoSettingsOutline} fontSize="24px" />}
+          text="Settings"
+          active
+          submenu={[{ text: "Session", link: "/session" }]}
         />
-          <SidebarItem
-            navSize={navSize}
-            link="/settings"
-            icon={<Icon as={IoSettingsOutline} fontSize="24px" />}
-            text="Settings"
-            active
-            submenu={[{ text: "Session", link: "/session" }]}
-          />
       </Stack>
     </Stack>
   );

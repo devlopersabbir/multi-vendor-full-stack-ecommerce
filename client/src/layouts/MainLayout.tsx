@@ -1,10 +1,12 @@
 import { Box, Flex, Heading, Stack, Text } from "@chakra-ui/react";
-import { Outlet } from "react-router-dom";
+import { Navigate, Outlet } from "react-router-dom";
 import Sidebar from "../components/sidebar/Sidebar";
 import Tobpar from "../components/topbar/Topbar";
+import { useSelector } from "react-redux";
 
 const MainLayout = () => {
-  return (
+  const { accessToken } = useSelector(({ authReducer }: any) => authReducer);
+  return accessToken ? (
     <Flex>
       <Sidebar />
       <Box as="main">
@@ -14,6 +16,8 @@ const MainLayout = () => {
         </Stack>
       </Box>
     </Flex>
+  ) : (
+    <Navigate to="/login" />
   );
 };
 

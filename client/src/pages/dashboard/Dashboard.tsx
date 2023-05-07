@@ -11,20 +11,33 @@ import React from "react";
 import CountUp from "react-countup";
 import { BiRightArrow } from "react-icons/bi";
 import { Link } from "react-router-dom";
+import useAxios from "../../hooks/useAxios";
+import { useQuery } from "@tanstack/react-query";
+import useUsers from "../../hooks/useUsers";
+import useProduct from "../../hooks/useProduct";
+import SkeletonBox from "../../components/skeleton/dashboard/SkeletonBox";
 
 const Dashboard = () => {
-  // const { data: report } = useQuery({
-  //   queryKey: ["reports"],
-  //   queryFn: () => axios.get("/api/data/getall").then((res: any) => res.data),
-  // });
-  // const { data: users } = useQuery({
-  //   queryKey: ["users"],
-  //   queryFn: () => axios.get("/api/users").then((res: any) => res.data),
-  // });
-  // const { data: chart } = useQuery({
-  //   queryKey: ["chart_data"],
-  //   queryFn: () => axios.get("/api/chart-data").then((res: any) => res.data),
-  // });
+  const axios = useAxios();
+  const { setAllUser } = useUsers();
+  const { setAllProduct } = useProduct();
+
+  const { data: users, isLoading: userLoading } = useQuery({
+    queryKey: ["users"],
+    queryFn: () =>
+      axios.get("/api/v1/users/get-all").then((res: any) => res.data),
+    onSuccess: (data) => {
+      setAllUser(data);
+    },
+  });
+  const { data: product, isLoading: productLoading } = useQuery({
+    queryKey: ["products"],
+    queryFn: () =>
+      axios.get("/api/v1/products/get-all").then((res: any) => res.data),
+    onSuccess: (data) => {
+      setAllProduct(data);
+    },
+  });
   return (
     <Stack>
       <Text as="h1" fontSize="16px" fontWeight="500" pb="3">
@@ -34,27 +47,33 @@ const Dashboard = () => {
         gap={5}
         templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)", "repeat(4, 1fr)"]}
       >
-        <Items
-          title="Total users"
-          name="User"
-          link="/dashboard/users"
-          ammout={13}
-          bg="linear-gradient(100.12deg, #05933A 4.73%, #0DB14B 102.11%)"
-        />
-        <Items
-          link="/dashboard/report"
-          title="Total Reports"
-          name={"Reports"}
-          ammout={5}
-          bg="linear-gradient(100.9deg, #1929BB 4.71%, #3F4ED4 99.88%)"
-        />
-        <Items
-          link="/dashboard/chart-data"
-          title="Total Chart Data"
-          name="Data"
-          ammout={4}
-          bg="linear-gradient(100.43deg, #E2104F 1.38%, #FF447C 99.88%)"
-        />
+        {userLoading && productLoading ? (
+          <SkeletonBox />
+        ) : (
+          <>
+            <Items
+              title="Total users"
+              name="User"
+              link="/dashboard/users"
+              ammout={userLoading ? "--" : users?.length}
+              bg="linear-gradient(100.12deg, #05933A 4.73%, #0DB14B 102.11%)"
+            />
+            <Items
+              link="/dashboard/product"
+              title="Total Product"
+              name={"Product"}
+              ammout={product?.length}
+              bg="linear-gradient(100.9deg, #1929BB 4.71%, #3F4ED4 99.88%)"
+            />
+            <Items
+              link="/dashboard/chart-data"
+              title="Total Chart Data"
+              name="Data"
+              ammout={4}
+              bg="linear-gradient(100.43deg, #E2104F 1.38%, #FF447C 99.88%)"
+            />
+          </>
+        )}
       </Grid>
     </Stack>
   );

@@ -16,16 +16,21 @@ import { CgProfile } from "react-icons/cg";
 import { RxDashboard } from "react-icons/rx";
 import { IoIosArrowDown } from "react-icons/io";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { logout } from "../../redux/slices/authSlice";
+import { axiosPublic } from "../../utils/axios/axios";
 
 const Tobpar = () => {
+  const { user } = useSelector(({ authReducer }: any) => authReducer);
+  const dispatch = useDispatch();
   const { colorMode } = useColorMode();
   const navigate = useNavigate();
-  // const logout = async () => {
-  //   unsetAuth();
-  //   await axiosPublic.post("/api/auth/logout");
-  //   navigate("/login");
-  //   window.location.replace("/login");
-  // };
+  const logouts = async () => {
+    await axiosPublic.post("/api/v1/auth/logout");
+    navigate("/");
+    window.location.replace("/");
+    dispatch(logout());
+  };
   return (
     <Flex
       position="fixed"
@@ -51,7 +56,7 @@ const Tobpar = () => {
           <Avatar name="Sabbir" />
           <Flex direction="column">
             <Text fontWeight={500} fontSize="16px">
-            SYSTEM ADMIN
+              {user?.name}
             </Text>
             <Text fontSize="14px" fontWeight={500}>
               Head of account
@@ -85,7 +90,7 @@ const Tobpar = () => {
                 <Text>Settings</Text>
               </Flex>
             </Link>
-            <Flex  mb={2} gap={2} as={MenuItem}>
+            <Flex mb={2} gap={2} as={MenuItem} onClick={logouts}>
               <Icon fontSize="2xl" as={AiOutlinePoweroff} />
               <Text>Log Out</Text>
             </Flex>

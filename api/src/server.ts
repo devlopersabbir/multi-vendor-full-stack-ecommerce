@@ -18,6 +18,8 @@ import { User } from "./entity/users/User";
 import { SeedAdmin } from "./utils/_data";
 import corsOption from "./configs/corsOptions";
 import { hash } from "bcrypt";
+import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 dotenv.config();
 declare module "express-serve-static-core" {
   interface Request {
@@ -27,6 +29,13 @@ declare module "express-serve-static-core" {
 
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
+app.use(bodyParser.json());
+app.use(
+  bodyParser.urlencoded({
+    extended: false,
+  })
+);
 app.use(fileUpload());
 app.use(cors(corsOption));
 app.use(morgan("dev"));
