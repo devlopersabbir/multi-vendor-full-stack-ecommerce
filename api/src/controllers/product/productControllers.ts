@@ -15,6 +15,7 @@ class Controller {
       shortDescription,
       description,
       price,
+      images,
       quantity,
       categoryUuid,
     } = req.body;
@@ -43,6 +44,7 @@ class Controller {
         shortDescription,
         description,
         price,
+        images,
         quantity,
         category,
         user: req.user,
@@ -66,9 +68,15 @@ class Controller {
    * ADMIN | VENDOR
    */
 
-  public static async get(req: Request, res: Response) {
+  public static async index(_: Request, res: Response) {
     try {
-      const product = await Product.find();
+      const product = await Product.find({
+        order: { updatedAt: "DESC" },
+        relations: {
+          category: true,
+          reviews: true,
+        },
+      });
       res.status(200).json(product);
     } catch (error) {
       res.status(500).json({ message: "Server not responding!" });

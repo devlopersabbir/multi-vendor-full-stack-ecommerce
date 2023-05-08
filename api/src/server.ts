@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
+import path from "path";
 import { AppDataSource } from "./data-source";
 import {
   authRoutes,
@@ -10,6 +11,7 @@ import {
   cartRoutes,
   reviewRoutes,
   wishListRoutes,
+  fileUploadRoutes,
 } from "./routes";
 import fileUpload from "express-fileupload";
 import morgan from "morgan";
@@ -48,6 +50,8 @@ app.use("/api/v1/categorys", categoryRoutes);
 app.use("/api/v1/carts", cartRoutes);
 app.use("/api/v1/reviews", reviewRoutes);
 app.use("/api/v1/wish-list", wishListRoutes);
+app.use("/api/v1/files", fileUploadRoutes);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const PORT = process.env.PORT || 4000;
 AppDataSource.initialize()

@@ -7,3 +7,5 @@ export type TUser = {
   phone: string;
   role: Role;
 };
+
+export type TRole = "ADMIN" | "VENDOR" | "CUSTOMER" 

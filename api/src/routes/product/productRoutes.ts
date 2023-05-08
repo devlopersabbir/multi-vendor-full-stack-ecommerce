@@ -12,5 +12,11 @@ routes.post(
   authoraization([Role.ADMIN, Role.VENDOR]),
   productController.store
 );
+routes.get(
+  "/get-all",
+  authentication,
+  authoraization([Role.ADMIN, Role.VENDOR]),
+  productController.index
+);
 
 export default routes;

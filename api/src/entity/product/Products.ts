@@ -24,6 +24,9 @@ export class Product extends Modal {
   @Column({ default: 1 })
   quantity: number;
 
+  @Column({ nullable: true, type: "simple-array" })
+  images: string[];
+
   @ManyToOne(() => User, (user) => user.products)
   @JoinColumn({
     name: "userUuid",

@@ -9,7 +9,7 @@ const MainLayout = () => {
   return accessToken ? (
     <Flex>
       <Sidebar />
-      <Box as="main">
+      <Box as="main" w="full">
         <Tobpar />
         <Stack p={4} mt={"94px"}>
           <Outlet />

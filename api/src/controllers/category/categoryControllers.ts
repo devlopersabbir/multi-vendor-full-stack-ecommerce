@@ -48,14 +48,15 @@ class Controller {
 
   /**
    * Get all category
-   * URL => /api/v1/category/get-all
+   * URL => /api/v1/categorys/get-all
    * METHOD => GET
    * ADMIN | VENDOR
    */
-
-  public static async get(req: Request, res: Response) {
+  public static async index(_: Request, res: Response) {
     try {
-      const category = await Category.find();
+      const category = await Category.find({
+        order: { createdAt: "DESC" },
+      });
       res.status(200).json(category);
     } catch (error) {
       res

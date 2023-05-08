@@ -13,6 +13,17 @@ routes.get(
   userController.index
 );
 routes.post("/register", userController.store);
-routes.get("get-single/:uuid", userController.find);
+routes.get(
+  "/get-single/:uuid",
+  authentication,
+  authoraization([Role.ADMIN, Role.CUSTOMER, Role.VENDOR]),
+  userController.get
+);
+routes.put(
+  "/update/:uuid",
+  authentication,
+  authoraization([Role.ADMIN, Role.CUSTOMER, Role.VENDOR]),
+  userController.update
+);
 
 export default routes;

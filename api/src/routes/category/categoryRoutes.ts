@@ -16,7 +16,7 @@ routes.get(
   "/get-all",
   authentication,
   authoraization([Role.ADMIN, Role.VENDOR]),
-  categoryController.get
+  categoryController.index
 );
 
 export default routes;

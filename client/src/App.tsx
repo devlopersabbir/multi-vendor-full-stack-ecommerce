@@ -7,6 +7,13 @@ import PersistLogin from "./components/PersistLogin";
 import AuthLayout from "./layouts/AuthLayout";
 import Product from "./pages/products/Product";
 import User from "./pages/users/User";
+import NewUser from "./pages/users/NewUser";
+import UpdateUser from "./pages/users/UpdateUser";
+import NewProduct from "./pages/products/NewProduct";
+import UpdateProduct from "./pages/products/UpdateProduct";
+import Categorys from "./pages/category/Categorys";
+import NewCategory from "./pages/category/NewCategory";
+import UpdateCategory from "./pages/category/UpdateCategory";
 
 const App = () => {
   return (
@@ -15,8 +22,21 @@ const App = () => {
         <Route element={<PersistLogin />}>
           <Route path="/" element={<MainLayout />}>
             <Route index element={<Dashboard />} />
-            <Route path="products" element={<Product />} />
-            <Route path="users" element={<User />} />
+            <Route path="users">
+              <Route index element={<User />} />
+              <Route path="create" element={<NewUser />} />
+              <Route path="update/:uuid" element={<UpdateUser />} />
+            </Route>
+            <Route path="products">
+              <Route index element={<Product />} />
+              <Route path="create" element={<NewProduct />} />
+              <Route path="update/:uuid" element={<UpdateProduct />} />
+            </Route>
+            <Route path="categorys">
+              <Route index element={<Categorys />} />
+              <Route path="create" element={<NewCategory />} />
+              <Route path="update/:uuid" element={<UpdateCategory />} />
+            </Route>
           </Route>
         </Route>
         <Route path="/login" element={<AuthLayout />}>

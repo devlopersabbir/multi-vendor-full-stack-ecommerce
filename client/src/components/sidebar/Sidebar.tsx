@@ -19,6 +19,7 @@ import { HiOutlineOfficeBuilding } from "react-icons/hi";
 
 import SidebarItem from "./SidebarItem";
 import { Link } from "react-router-dom";
+import { BiCategory } from "react-icons/bi";
 
 const Sidebar = () => {
   const [navSize, setNavSize] = useState<90 | 260>(260);
@@ -92,6 +93,12 @@ const Sidebar = () => {
           link="/products"
           icon={<Icon as={RiProductHuntLine} fontSize="24px" />}
           text="Products"
+        />
+        <SidebarItem
+          navSize={navSize}
+          link="/categorys"
+          icon={<Icon as={BiCategory} fontSize="24px" />}
+          text="Category"
         />
         <SidebarItem
           navSize={navSize}

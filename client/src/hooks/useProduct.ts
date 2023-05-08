@@ -1,6 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { setUser } from "../redux/slices/userSlice";
-import { IProduct, IUser } from "../utils/interface/interface";
+import { IProduct } from "../utils/interface/interface";
 import { setProduct } from "../redux/slices/productSlice";
 
 const useProduct = () => {

@@ -5,3 +5,4 @@ export { default as categoryController } from "./category/categoryControllers";
 export { default as wishListController } from "./wishList/wishListControllers";
 export { default as cartController } from "./cart/cartControllers";
 export { default as reviewController } from "./review/reviewControllers";
+export { default as fileUploadController } from "./fileUpload/fileUploadControllers";

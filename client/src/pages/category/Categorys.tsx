@@ -14,15 +14,14 @@ import { IoIosArrowDropdown } from "react-icons/io";
 import { Link } from "react-router-dom";
 import Datatable from "../../components/dataTable/DataTable";
 import { createColumnHelper } from "@tanstack/table-core";
-import { IProduct } from "../../utils/interface/interface";
+import { ICategory, IUser } from "../../utils/interface/interface";
 import moment from "moment";
 import useAxios from "../../hooks/useAxios";
 import Error from "../../components/common/Error";
 import SkeletonTable from "../../components/skeleton/table/SkeletonTable";
-import useProduct from "../../hooks/useProduct";
 
-const Product = () => {
-  const columnHelper = createColumnHelper<IProduct>();
+const Categorys = () => {
+  const columnHelper = createColumnHelper<ICategory>();
   const columns = [
     columnHelper.accessor("uuid", {
       header: () => "S.N",
@@ -32,20 +31,12 @@ const Product = () => {
       header: () => "Name",
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor("price", {
-      header: () => "Price",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("quantity", {
-      header: () => "Quantity",
-      cell: (info) => info.getValue(),
-    }),
-    columnHelper.accessor("category.name", {
-      header: () => "Category",
+    columnHelper.accessor("image", {
+      header: () => "Image",
       cell: (info) => info.getValue(),
     }),
     columnHelper.accessor("createdAt", {
-      header: () => "Created AT",
+      header: () => "Created At",
       cell: (info) => moment(info.getValue()).format("LL"),
     }),
 
@@ -56,7 +47,7 @@ const Product = () => {
         return (
           <Button
             as={Link}
-            to={`/product/update/${props.row.original.uuid}`}
+            to={`/categorys/update/${props.row.original.uuid}`}
             rounded="2xl"
             size="sm"
             fontSize="14px"
@@ -70,18 +61,11 @@ const Product = () => {
     }),
   ];
   const axios = useAxios();
-  const { setAllProduct } = useProduct();
-
   const { data, isError, isLoading } = useQuery({
-    queryKey: ["product"],
+    queryKey: ["category"],
     queryFn: () =>
-      axios.get("/api/v1/products/get-all").then((res) => res.data),
-
-    onSuccess: (data: any) => {
-      setAllProduct(data);
-    },
+      axios.get("/api/v1/categorys/get-all").then((res) => res.data),
   });
-
   return (
     <Card
       bg="white"
@@ -95,7 +79,7 @@ const Product = () => {
         borderBottom="0.5px solid #BFBFBF"
       >
         <Heading fontWeight={500} fontSize="20px">
-          List of Product
+          List of Category
         </Heading>
         <Stack direction="row" spacing={4}>
           <Button
@@ -108,13 +92,13 @@ const Product = () => {
           </Button>
           <Button
             as={Link}
-            to="/products/create"
+            to="/categorys/create"
             bg="primary.200"
             color="white"
             colorScheme="yellow"
             leftIcon={<Icon as={AiOutlinePlusCircle} />}
           >
-            New Product
+            New Category
           </Button>
         </Stack>
       </Flex>
@@ -132,4 +116,4 @@ const Product = () => {
   );
 };
 
-export default Product;
+export default Categorys;

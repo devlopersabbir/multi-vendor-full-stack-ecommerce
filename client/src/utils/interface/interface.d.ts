@@ -10,6 +10,19 @@ export interface IUser {
   address: string;
   phone: string;
   role: Role;
+  image?: string;
+  createdAt?: string;
+  updatedAt?: string;
+}
+
+export interface ICategory {
+  id: number;
+  uuid: string;
+  name: string;
+  slug: string;
+  image: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export interface IProduct {
@@ -20,7 +33,11 @@ export interface IProduct {
   shortDescription: string;
   description: string;
   price: number;
+  images?: [];
   quantity: number;
   userUuid: any;
+  category: ICategory;
+  createdAt?: string;
+  updatedAt?: string;
   categoryUuid: any;
 }
