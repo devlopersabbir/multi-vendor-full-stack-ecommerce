@@ -63,8 +63,8 @@ function Datatable<Data extends object>({
   const [globalFilter, setGlobalFilter] = useState<string>("");
 
   // my code here
-  const [columnCustom, setColumnCustom] = useState<any>(columns);
-  const [allData, setAllData] = useState<Array<any>>(data ?? data);
+  // const [columnCustom, setColumnCustom] = useState<any>(columns);
+  // const [allData, setAllData] = useState<Array<any>>(data ?? data);
   const [tableData, setTableData] = useState<Array<any>>(data ?? data);
   const [startDate, setStartData] = useState<Date>(new Date());
   const [endDate, setEndDate] = useState<Date>(new Date());
@@ -74,7 +74,7 @@ function Datatable<Data extends object>({
     key: string;
   };
   const handleChangeForDateRangeFilter = (ranges: any) => {
-    let filterdWithRange = allData.filter((data: any) => {
+    let filterdWithRange = data?.filter((data: any) => {
       let dataInsertedData = new Date(data?.createdAt);
       return (
         dataInsertedData >= ranges.selection.startDate &&
@@ -105,7 +105,7 @@ function Datatable<Data extends object>({
     return itemRank.passed;
   };
   const table = useReactTable({
-    columns: columnCustom,
+    columns: columns,
     data: tableData,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -175,7 +175,7 @@ function Datatable<Data extends object>({
           {table.getHeaderGroups().map((headerGroup: any) => (
             <Tr key={headerGroup.id}>
               {headerGroup.headers.map((header: any) => {
-                const meta: any = header.column.columnDef.meta;
+                // const meta: any = header.column.columnDef.meta;
                 return (
                   <Th key={header.id}>
                     {flexRender(
@@ -202,7 +202,7 @@ function Datatable<Data extends object>({
               }
             >
               {row.getVisibleCells().map((cell: any) => {
-                const meta: any = cell.column.columnDef.meta;
+                // const meta: any = cell.column.columnDef.meta;
                 return (
                   <Td key={cell.id}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}

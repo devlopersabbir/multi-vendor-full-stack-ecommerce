@@ -12,7 +12,7 @@ import { BiCategory } from "react-icons/bi";
 
 const Sidebar = () => {
   const [navSize, setNavSize] = useState<90 | 260>(260);
-  const [isHover, setIsHoverd] = useState<boolean>(false);
+  const [_, setIsHoverd] = useState<boolean>(false);
 
   return (
     <Stack

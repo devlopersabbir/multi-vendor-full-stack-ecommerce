@@ -50,9 +50,9 @@ const UserFrom = ({ mode, user }: IUserFormProps) => {
   const [phone, setPhone] = useState<string>(
     mode === "EDIT" && user && user.phone ? user.phone : ""
   );
-  const [image, setImage] = useState<string>(
-    mode === "EDIT" && user && user.image ? user.image : ""
-  );
+  // const [image, setImage] = useState<string>(
+  //   mode === "EDIT" && user && user.image ? user.image : ""
+  // );
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const axios = useAxios();
@@ -69,7 +69,7 @@ const UserFrom = ({ mode, user }: IUserFormProps) => {
         password,
         name: fullName,
         phone,
-        image,
+        image: uploadedImages ?? uploadedImages,
       }),
     onSuccess() {
       toast.success("User created!");
