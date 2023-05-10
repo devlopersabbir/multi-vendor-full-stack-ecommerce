@@ -172,9 +172,9 @@ function Datatable<Data extends object>({
           bg={colorMode === "dark" ? "blackAlpha.300" : "unset"}
           borderBottom="0.5px solid #D9D9D9"
         >
-          {table.getHeaderGroups().map((headerGroup:any) => (
+          {table.getHeaderGroups().map((headerGroup: any) => (
             <Tr key={headerGroup.id}>
-              {headerGroup.headers.map((header:any) => {
+              {headerGroup.headers.map((header: any) => {
                 const meta: any = header.column.columnDef.meta;
                 return (
                   <Th key={header.id}>
@@ -189,7 +189,7 @@ function Datatable<Data extends object>({
           ))}
         </Thead>
         <Tbody>
-          {table.getRowModel().rows.map((row:any, i:number) => (
+          {table.getRowModel().rows.map((row: any, i: number) => (
             <Tr
               key={row.id}
               borderBottom="0.3px solid #D9D9D9"
@@ -201,7 +201,7 @@ function Datatable<Data extends object>({
                   : "unset"
               }
             >
-              {row.getVisibleCells().map((cell:any) => {
+              {row.getVisibleCells().map((cell: any) => {
                 const meta: any = cell.column.columnDef.meta;
                 return (
                   <Td key={cell.id}>

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { IProduct } from "../../utils/interface/interface";
 import useAxios from "../../hooks/useAxios";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Loading from "../common/Loading";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Error from "../common/Error";
 import {
   Button,
@@ -15,8 +14,6 @@ import {
   Heading,
   Image,
   Input,
-  InputGroup,
-  Select,
   Spinner,
   Stack,
   VStack,
@@ -25,7 +22,6 @@ import FileInput from "../common/FileInput";
 import useFileUpload from "../../hooks/useFileUpload";
 import { BsArrowLeftCircle } from "react-icons/bs";
 import { Link, useNavigate } from "react-router-dom";
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 import { baseURL } from "../../utils/axios/axios";
 import { toast } from "react-hot-toast";

@@ -1,24 +1,13 @@
-import {
-  Flex,
-  Heading,
-  Icon,
-  IconButton,
-  Image,
-  Stack,
-} from "@chakra-ui/react";
+import { Flex, Icon, IconButton, Stack } from "@chakra-ui/react";
 import { useState } from "react";
-import { AiOutlineUser } from "react-icons/ai";
-import { BsCoin, BsPeople } from "react-icons/bs";
-import { FiFile, FiMenu } from "react-icons/fi";
-import { IoWalletOutline, IoSettingsOutline } from "react-icons/io5";
-import { RiFileList3Line, RiProductHuntLine } from "react-icons/ri";
+import { BsPeople } from "react-icons/bs";
+import { FiMenu } from "react-icons/fi";
+import { IoSettingsOutline } from "react-icons/io5";
+import { RiProductHuntLine } from "react-icons/ri";
 import { RxDashboard } from "react-icons/rx";
 import { TfiWorld } from "react-icons/tfi";
-import { TbLicense } from "react-icons/tb";
-import { HiOutlineOfficeBuilding } from "react-icons/hi";
 
 import SidebarItem from "./SidebarItem";
-import { Link } from "react-router-dom";
 import { BiCategory } from "react-icons/bi";
 
 const Sidebar = () => {

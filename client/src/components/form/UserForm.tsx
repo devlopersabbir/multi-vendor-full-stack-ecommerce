@@ -15,7 +15,7 @@ import {
   Stack,
   VStack,
 } from "@chakra-ui/react";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { BsArrowLeftCircle } from "react-icons/bs";

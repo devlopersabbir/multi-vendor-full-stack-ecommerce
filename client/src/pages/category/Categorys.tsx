@@ -14,7 +14,7 @@ import { IoIosArrowDropdown } from "react-icons/io";
 import { Link } from "react-router-dom";
 import Datatable from "../../components/dataTable/DataTable";
 import { createColumnHelper } from "@tanstack/table-core";
-import { ICategory, IUser } from "../../utils/interface/interface";
+import { ICategory } from "../../utils/interface/interface";
 import moment from "moment";
 import useAxios from "../../hooks/useAxios";
 import Error from "../../components/common/Error";

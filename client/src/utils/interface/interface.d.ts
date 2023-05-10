@@ -1,5 +1,4 @@
 import { Role } from "../enum/enum";
-import { TUser } from "../types/types";
 
 export interface IUser {
   id: number;

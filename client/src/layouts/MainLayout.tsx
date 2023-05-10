@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, Stack, Text } from "@chakra-ui/react";
+import { Box, Flex, Stack } from "@chakra-ui/react";
 import { Navigate, Outlet } from "react-router-dom";
 import Sidebar from "../components/sidebar/Sidebar";
 import Tobpar from "../components/topbar/Topbar";

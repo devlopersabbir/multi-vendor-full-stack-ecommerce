@@ -8,4 +8,4 @@ export type TUser = {
   role: Role;
 };
 
-export type TRole = "ADMIN" | "VENDOR" | "CUSTOMER" 
+export type TRole = "ADMIN" | "VENDOR" | "CUSTOMER";
