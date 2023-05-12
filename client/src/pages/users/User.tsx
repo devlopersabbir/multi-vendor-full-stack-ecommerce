@@ -7,6 +7,8 @@ import {
   CardHeader,
   Icon,
   Stack,
+  ButtonGroup,
+  useDisclosure,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { AiOutlineEye, AiOutlinePlusCircle } from "react-icons/ai";
@@ -19,8 +21,13 @@ import moment from "moment";
 import useAxios from "../../hooks/useAxios";
 import Error from "../../components/common/Error";
 import SkeletonTable from "../../components/skeleton/table/SkeletonTable";
+import { MdQuickreply } from "react-icons/md";
+import View from "../../components/modal/view/View";
+import useUsers from "../../hooks/useUsers";
 
 const User = () => {
+  const { onOpen, onClose, isOpen } = useDisclosure();
+  const { set_SelectedUser } = useUsers();
   const columnHelper = createColumnHelper<IUser>();
   const columns = [
     columnHelper.accessor("uuid", {
@@ -53,17 +60,33 @@ const User = () => {
       id: "actions",
       cell: (props: any) => {
         return (
-          <Button
-            as={Link}
-            to={`/users/update/${props.row.original.uuid}`}
-            rounded="2xl"
-            size="sm"
-            fontSize="14px"
-            border="2px solid gray"
-            leftIcon={<Icon mr={-1} as={AiOutlineEye} fontSize="16px" />}
-          >
-            Open
-          </Button>
+          <ButtonGroup>
+            <Button
+              as={Link}
+              to={`/users/update/${props.row.original.uuid}`}
+              rounded="2xl"
+              size="sm"
+              fontSize="14px"
+              border="2px solid gray"
+              leftIcon={<Icon mr={-1} as={AiOutlineEye} fontSize="16px" />}
+            >
+              Open
+            </Button>
+
+            <Button
+              onClick={() => {
+                set_SelectedUser(props.row?.original as IUser);
+                onOpen();
+              }}
+              rounded="2xl"
+              size="sm"
+              fontSize="14px"
+              colorScheme="green"
+              leftIcon={<Icon mr={-1} as={MdQuickreply} fontSize="16px" />}
+            >
+              View
+            </Button>
+          </ButtonGroup>
         );
       },
     }),
@@ -119,6 +142,7 @@ const User = () => {
           <Datatable data={data} columns={columns} />
         )}
       </CardBody>
+      <View onClose={onClose} isOpen={isOpen} heading="User info" />
     </Card>
   );
 };

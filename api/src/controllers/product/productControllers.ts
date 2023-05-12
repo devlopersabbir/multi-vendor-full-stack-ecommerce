@@ -16,6 +16,7 @@ class Controller {
       description,
       price,
       images,
+      brand,
       quantity,
       categoryUuid,
     } = req.body;
@@ -45,6 +46,7 @@ class Controller {
         description,
         price,
         images,
+        brand,
         quantity,
         category,
         user: req.user,

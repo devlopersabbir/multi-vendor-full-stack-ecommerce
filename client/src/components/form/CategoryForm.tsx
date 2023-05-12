@@ -34,7 +34,7 @@ interface ICategoryForm {
 const CategoryForm: React.FC<ICategoryForm> = ({ mode, category }) => {
   const axios = useAxios();
   const navigate = useNavigate();
-  const QueryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const createMutation = useMutation({
     mutationKey: ["category"],
@@ -47,7 +47,8 @@ const CategoryForm: React.FC<ICategoryForm> = ({ mode, category }) => {
         .then((res) => res.data),
     onSuccess: (data: any) => {
       toast.success(data?.message);
-      QueryClient.invalidateQueries({ queryKey: ["category"] });
+      queryClient.invalidateQueries({ queryKey: ["category"] });
+      queryClient.resetQueries({ queryKey: ["category"] });
       navigate("/categorys");
     },
 

@@ -34,9 +34,15 @@ export class Order extends Modal {
   })
   products: Product[];
 
-  @Column()
-  total: number;
-
   @Column({ type: "enum", enum: OrderStatus, default: OrderStatus.PROCESSING })
   status: string;
+
+  @Column()
+  totalOrders: number;
+
+  @Column()
+  totalPrice: number;
+
+  @Column()
+  totalRevenue: number;
 }

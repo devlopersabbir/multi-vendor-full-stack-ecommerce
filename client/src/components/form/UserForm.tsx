@@ -69,12 +69,13 @@ const UserFrom = ({ mode, user }: IUserFormProps) => {
         password,
         name: fullName,
         phone,
-        image: uploadedImages ?? uploadedImages,
+        image: uploadedImages[0] ? uploadedImages[0] : "",
       }),
     onSuccess() {
       toast.success("User created!");
       queryClient.invalidateQueries({ queryKey: ["user"] });
       navigate("/users");
+      queryClient.resetQueries({ queryKey: ["user"] });
     },
 
     onError(error: any) {
@@ -98,6 +99,7 @@ const UserFrom = ({ mode, user }: IUserFormProps) => {
     onSuccess: (data: any) => {
       toast.success(data?.message);
       queryClient.invalidateQueries({ queryKey: ["user"] });
+      queryClient.resetQueries({ queryKey: ["user"] });
       navigate("/users");
     },
     onError: (error: any) => {

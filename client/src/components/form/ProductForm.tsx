@@ -38,7 +38,7 @@ interface IProductForm {
 const ProductForm: React.FC<IProductForm> = ({ mode, product }) => {
   const axios = useAxios();
   const navigate = useNavigate();
-  const QueryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const category = useQuery({
     queryKey: ["category"],
@@ -62,7 +62,8 @@ const ProductForm: React.FC<IProductForm> = ({ mode, product }) => {
         .then((res) => res.data),
     onSuccess: (data: any) => {
       toast.success(data?.message);
-      QueryClient.invalidateQueries({ queryKey: ["product"] });
+      queryClient.invalidateQueries({ queryKey: ["product"] });
+      queryClient.resetQueries({ queryKey: ["product"] });
       navigate("/products");
     },
 
@@ -83,6 +84,9 @@ const ProductForm: React.FC<IProductForm> = ({ mode, product }) => {
   );
   const [categorys, setCategorys] = useState<string>(
     mode === "UPDATE" && product ? product.categoryUuid : ""
+  );
+  const [brand, setBrand] = useState<string>(
+    mode === "UPDATE" && product ? product.brand : ""
   );
   // const [images, setImages] = useState<any>(
   //   mode === "UPDATE" && product ? product.images : []
@@ -166,6 +170,7 @@ const ProductForm: React.FC<IProductForm> = ({ mode, product }) => {
           <FormControl isRequired>
             <FormLabel>Name</FormLabel>
             <Input
+              type="text"
               size="lg"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -177,6 +182,7 @@ const ProductForm: React.FC<IProductForm> = ({ mode, product }) => {
             <FormLabel>Price</FormLabel>
             <InputGroup>
               <Input
+                type="number"
                 size="lg"
                 value={price}
                 onChange={(e) => setPrice(Number(e.target.value))}
@@ -189,6 +195,7 @@ const ProductForm: React.FC<IProductForm> = ({ mode, product }) => {
             <FormLabel>Quantity</FormLabel>
             <InputGroup>
               <Input
+                type="number"
                 size="lg"
                 value={quantity}
                 onChange={(e) => setQuantity(Number(e.target.value))}
@@ -213,14 +220,17 @@ const ProductForm: React.FC<IProductForm> = ({ mode, product }) => {
                 ))}
             </Select>
           </FormControl>
-          <FormControl isRequired w="full">
-            <FormLabel>Short Description</FormLabel>
-            <ReactQuill
-              style={{ height: "100px", marginBottom: "40px" }}
-              theme="snow"
-              value={shortDescription}
-              onChange={setShortDescription}
-            />
+          <FormControl>
+            <FormLabel>Brand Name</FormLabel>
+            <InputGroup>
+              <Input
+                type="text"
+                size="lg"
+                value={brand}
+                onChange={(e) => setBrand(e.target.value)}
+                placeholder="Brand name"
+              />
+            </InputGroup>
           </FormControl>
           <FormControl isRequired={mode === "CREATE" ? true : false}>
             <FormLabel>Image</FormLabel>
@@ -258,6 +268,21 @@ const ProductForm: React.FC<IProductForm> = ({ mode, product }) => {
                 </HStack>
               </>
             ) : null}
+          </FormControl>
+        </Grid>
+        <Grid
+          mt={5}
+          templateColumns={["repeat(1, 1fr)", "repeat(1, 1fr)"]}
+          w="full"
+        >
+          <FormControl isRequired w="full">
+            <FormLabel>Short Description</FormLabel>
+            <ReactQuill
+              style={{ height: "100px", marginBottom: "40px" }}
+              theme="snow"
+              value={shortDescription}
+              onChange={setShortDescription}
+            />
           </FormControl>
         </Grid>
         <Grid

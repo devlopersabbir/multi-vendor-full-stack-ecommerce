@@ -33,10 +33,17 @@ export interface IProduct {
   description: string;
   price: number;
   images?: [];
+  brand: string;
   quantity: number;
   userUuid: any;
   category: ICategory;
   createdAt?: string;
   updatedAt?: string;
   categoryUuid: any;
+}
+
+export interface IModalView {
+  heading: string;
+  isOpen: boolean;
+  onClose: () => void;
 }

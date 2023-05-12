@@ -14,6 +14,7 @@ export interface IAuthPayload {
 // user
 export interface IUserState {
   users: IUser[] | null | undefined;
+  selectedUser: IUser | null;
 }
 
 // product

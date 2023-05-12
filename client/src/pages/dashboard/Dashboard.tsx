@@ -23,7 +23,7 @@ const Dashboard = () => {
   const { setAllProduct } = useProduct();
 
   const { data: users, isLoading: userLoading } = useQuery({
-    queryKey: ["users"],
+    queryKey: ["user"],
     queryFn: () =>
       axios.get("/api/v1/users/get-all").then((res: any) => res.data),
     onSuccess: (data) => {
@@ -31,7 +31,7 @@ const Dashboard = () => {
     },
   });
   const { data: product, isLoading: productLoading } = useQuery({
-    queryKey: ["products"],
+    queryKey: ["product"],
     queryFn: () =>
       axios.get("/api/v1/products/get-all").then((res: any) => res.data),
     onSuccess: (data) => {
@@ -67,8 +67,29 @@ const Dashboard = () => {
             />
             <Items
               link="/dashboard/chart-data"
-              title="Total Chart Data"
-              name="Data"
+              title="Total Order"
+              name="Order"
+              ammout={4}
+              bg="linear-gradient(100.43deg, #E2104F 1.38%, #FF447C 99.88%)"
+            />
+            <Items
+              title="Total users"
+              name="User"
+              link="/dashboard/users"
+              ammout={userLoading ? "--" : users?.length}
+              bg="linear-gradient(100.12deg, #05933A 4.73%, #0DB14B 102.11%)"
+            />
+            <Items
+              link="/dashboard/product"
+              title="Total Product"
+              name={"Product"}
+              ammout={product?.length}
+              bg="linear-gradient(100.9deg, #1929BB 4.71%, #3F4ED4 99.88%)"
+            />
+            <Items
+              link="/dashboard/chart-data"
+              title="Total Order"
+              name="Order"
               ammout={4}
               bg="linear-gradient(100.43deg, #E2104F 1.38%, #FF447C 99.88%)"
             />

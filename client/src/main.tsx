@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { Provider } from "react-redux";
 import { store } from "./redux/store";
 import theme from "./chakra/theme";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -25,6 +26,7 @@ ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
         <Toaster position="top-center" reverseOrder={false} />
         <QueryClientProvider client={queryClient}>
           <App />
+          <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </Provider>
     </ChakraProvider>
