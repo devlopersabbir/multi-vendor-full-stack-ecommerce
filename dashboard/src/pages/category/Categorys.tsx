@@ -7,6 +7,8 @@ import {
   CardHeader,
   Icon,
   Stack,
+  Image,
+  Text,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { AiOutlineEye, AiOutlinePlusCircle } from "react-icons/ai";
@@ -19,6 +21,7 @@ import moment from "moment";
 import useAxios from "../../hooks/useAxios";
 import Error from "../../components/common/Error";
 import SkeletonTable from "../../components/skeleton/table/SkeletonTable";
+import { baseURL } from "../../utils/axios/axios";
 
 const Categorys = () => {
   const columnHelper = createColumnHelper<ICategory>();
@@ -33,7 +36,24 @@ const Categorys = () => {
     }),
     columnHelper.accessor("image", {
       header: () => "Image",
-      cell: (info) => info.getValue(),
+      cell: (info) => {
+        if (info.getValue()) {
+          return (
+            <Image
+              boxShadow="md"
+              rounded="md"
+              p={1}
+              w="40"
+              h="auto"
+              objectFit="cover"
+              alt="category image"
+              src={`${baseURL}/uploads/${info.getValue()}`}
+            />
+          );
+        } else {
+          return <Text color="red.500">Empty!</Text>;
+        }
+      },
     }),
     columnHelper.accessor("createdAt", {
       header: () => "Created At",

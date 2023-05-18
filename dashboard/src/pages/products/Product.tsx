@@ -7,8 +7,9 @@ import {
   CardHeader,
   Icon,
   Stack,
-  ButtonGroup,
-  useDisclosure,
+  Image,
+  Text,
+  Grid,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { AiOutlineEye, AiOutlinePlusCircle } from "react-icons/ai";
@@ -16,42 +17,72 @@ import { IoIosArrowDropdown } from "react-icons/io";
 import { Link } from "react-router-dom";
 import Datatable from "../../components/dataTable/DataTable";
 import { createColumnHelper } from "@tanstack/table-core";
-import { IUser } from "../../utils/interface/interface";
+import { IProduct } from "../../utils/interface/interface";
 import moment from "moment";
 import useAxios from "../../hooks/useAxios";
 import Error from "../../components/common/Error";
 import SkeletonTable from "../../components/skeleton/table/SkeletonTable";
-import { MdQuickreply } from "react-icons/md";
-import View from "../../components/modal/view/View";
-import useUsers from "../../hooks/useUsers";
+import useProduct from "../../hooks/useProduct";
+import { baseURL } from "../../utils/axios/axios";
 
-const User = () => {
-  const { onOpen, onClose, isOpen } = useDisclosure();
-  const { set_SelectedUser } = useUsers();
-  const columnHelper = createColumnHelper<IUser>();
+const Product = () => {
+  const columnHelper = createColumnHelper<IProduct>();
   const columns = [
     columnHelper.accessor("uuid", {
       header: () => "S.N",
       cell: (info) => info.row.index + 1,
     }),
+    columnHelper.accessor("images", {
+      header: () => "Image",
+      cell: (info) => {
+        const images = info.getValue();
+        if (Array.isArray(images) && images.length >= 0) {
+          return (
+            <Grid templateColumns="repeat(3, 1fr)" gap={2}>
+              {images?.map((img: string, ind: number) => {
+                return (
+                  <Image
+                    boxShadow="md"
+                    rounded="md"
+                    p={1}
+                    w="40"
+                    h="auto"
+                    objectFit="cover"
+                    key={ind}
+                    src={`${baseURL}/uploads/${img}`}
+                    alt="product image"
+                  />
+                );
+              })}
+            </Grid>
+          );
+        } else if (typeof images === "string") {
+          return (
+            <Image src={`${baseURL}/uploads/${images}`} alt="product image" />
+          );
+        } else {
+          return <Text color="red.500">Empty!</Text>;
+        }
+      },
+    }),
     columnHelper.accessor("name", {
       header: () => "Name",
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor("email", {
-      header: () => "Email ID",
+    columnHelper.accessor("price", {
+      header: () => "Price",
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor("phone", {
-      header: () => "Phone",
+    columnHelper.accessor("quantity", {
+      header: () => "Quantity",
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor("role", {
-      header: () => "Role",
-      cell: (info) => info.getValue().replace("_", " "),
+    columnHelper.accessor("category.name", {
+      header: () => "Category",
+      cell: (info) => info.getValue(),
     }),
     columnHelper.accessor("createdAt", {
-      header: () => "Join Date",
+      header: () => "Created AT",
       cell: (info) => moment(info.getValue()).format("LL"),
     }),
 
@@ -60,42 +91,34 @@ const User = () => {
       id: "actions",
       cell: (props: any) => {
         return (
-          <ButtonGroup>
-            <Button
-              as={Link}
-              to={`/users/update/${props.row.original.uuid}`}
-              rounded="2xl"
-              size="sm"
-              fontSize="14px"
-              border="2px solid gray"
-              leftIcon={<Icon mr={-1} as={AiOutlineEye} fontSize="16px" />}
-            >
-              Open
-            </Button>
-
-            <Button
-              onClick={() => {
-                set_SelectedUser(props.row?.original as IUser);
-                onOpen();
-              }}
-              rounded="2xl"
-              size="sm"
-              fontSize="14px"
-              colorScheme="green"
-              leftIcon={<Icon mr={-1} as={MdQuickreply} fontSize="16px" />}
-            >
-              View
-            </Button>
-          </ButtonGroup>
+          <Button
+            as={Link}
+            to={`/product/update/${props.row.original.uuid}`}
+            rounded="2xl"
+            size="sm"
+            fontSize="14px"
+            border="2px solid gray"
+            leftIcon={<Icon mr={-1} as={AiOutlineEye} fontSize="16px" />}
+          >
+            Open
+          </Button>
         );
       },
     }),
   ];
   const axios = useAxios();
+  const { setAllProduct } = useProduct();
+
   const { data, isError, isLoading } = useQuery({
-    queryKey: ["user"],
-    queryFn: () => axios.get("/api/v1/users/get-all").then((res) => res.data),
+    queryKey: ["product"],
+    queryFn: () =>
+      axios.get("/api/v1/products/get-all").then((res) => res.data),
+
+    onSuccess: (data: any) => {
+      setAllProduct(data);
+    },
   });
+
   return (
     <Card
       bg="white"
@@ -109,7 +132,7 @@ const User = () => {
         borderBottom="0.5px solid #BFBFBF"
       >
         <Heading fontWeight={500} fontSize="20px">
-          List of Users
+          List of Product
         </Heading>
         <Stack direction="row" spacing={4}>
           <Button
@@ -122,13 +145,13 @@ const User = () => {
           </Button>
           <Button
             as={Link}
-            to="/users/create"
+            to="/products/create"
             bg="primary.200"
             color="white"
             colorScheme="yellow"
             leftIcon={<Icon as={AiOutlinePlusCircle} />}
           >
-            New user
+            New Product
           </Button>
         </Stack>
       </Flex>
@@ -142,9 +165,8 @@ const User = () => {
           <Datatable data={data} columns={columns} />
         )}
       </CardBody>
-      <View onClose={onClose} isOpen={isOpen} heading="User info" />
     </Card>
   );
 };
 
-export default User;
+export default Product;

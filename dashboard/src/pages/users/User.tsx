@@ -7,6 +7,9 @@ import {
   CardHeader,
   Icon,
   Stack,
+  ButtonGroup,
+  useDisclosure,
+  Avatar,
 } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { AiOutlineEye, AiOutlinePlusCircle } from "react-icons/ai";
@@ -14,38 +17,57 @@ import { IoIosArrowDropdown } from "react-icons/io";
 import { Link } from "react-router-dom";
 import Datatable from "../../components/dataTable/DataTable";
 import { createColumnHelper } from "@tanstack/table-core";
-import { IProduct } from "../../utils/interface/interface";
+import { IUser } from "../../utils/interface/interface";
 import moment from "moment";
 import useAxios from "../../hooks/useAxios";
 import Error from "../../components/common/Error";
 import SkeletonTable from "../../components/skeleton/table/SkeletonTable";
-import useProduct from "../../hooks/useProduct";
+import { MdQuickreply } from "react-icons/md";
+import View from "../../components/modal/view/View";
+import useUsers from "../../hooks/useUsers";
+import { baseURL } from "../../utils/axios/axios";
 
-const Product = () => {
-  const columnHelper = createColumnHelper<IProduct>();
+const User = () => {
+  const { onOpen, onClose, isOpen } = useDisclosure();
+  const { set_SelectedUser } = useUsers();
+  const columnHelper = createColumnHelper<IUser>();
   const columns = [
     columnHelper.accessor("uuid", {
       header: () => "S.N",
       cell: (info) => info.row.index + 1,
     }),
+    columnHelper.accessor("image", {
+      header: () => "Profile",
+      cell: (info) => {
+        if (info.getValue()) {
+          return (
+            <Avatar size="lg" src={`${baseURL}/uploads/${info.getValue()}`} />
+          );
+        } else {
+          return (
+            <Avatar size="lg" src={`${baseURL}/uploads/${info.getValue()}`} />
+          );
+        }
+      },
+    }),
     columnHelper.accessor("name", {
       header: () => "Name",
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor("price", {
-      header: () => "Price",
+    columnHelper.accessor("email", {
+      header: () => "Email ID",
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor("quantity", {
-      header: () => "Quantity",
+    columnHelper.accessor("phone", {
+      header: () => "Phone",
       cell: (info) => info.getValue(),
     }),
-    columnHelper.accessor("category.name", {
-      header: () => "Category",
-      cell: (info) => info.getValue(),
+    columnHelper.accessor("role", {
+      header: () => "Role",
+      cell: (info) => info.getValue().replace("_", " "),
     }),
     columnHelper.accessor("createdAt", {
-      header: () => "Created AT",
+      header: () => "Join Date",
       cell: (info) => moment(info.getValue()).format("LL"),
     }),
 
@@ -54,34 +76,42 @@ const Product = () => {
       id: "actions",
       cell: (props: any) => {
         return (
-          <Button
-            as={Link}
-            to={`/product/update/${props.row.original.uuid}`}
-            rounded="2xl"
-            size="sm"
-            fontSize="14px"
-            border="2px solid gray"
-            leftIcon={<Icon mr={-1} as={AiOutlineEye} fontSize="16px" />}
-          >
-            Open
-          </Button>
+          <ButtonGroup>
+            <Button
+              as={Link}
+              to={`/users/update/${props.row.original.uuid}`}
+              rounded="2xl"
+              size="sm"
+              fontSize="14px"
+              border="2px solid gray"
+              leftIcon={<Icon mr={-1} as={AiOutlineEye} fontSize="16px" />}
+            >
+              Open
+            </Button>
+
+            <Button
+              onClick={() => {
+                set_SelectedUser(props.row?.original as IUser);
+                onOpen();
+              }}
+              rounded="2xl"
+              size="sm"
+              fontSize="14px"
+              colorScheme="green"
+              leftIcon={<Icon mr={-1} as={MdQuickreply} fontSize="16px" />}
+            >
+              View
+            </Button>
+          </ButtonGroup>
         );
       },
     }),
   ];
   const axios = useAxios();
-  const { setAllProduct } = useProduct();
-
   const { data, isError, isLoading } = useQuery({
-    queryKey: ["product"],
-    queryFn: () =>
-      axios.get("/api/v1/products/get-all").then((res) => res.data),
-
-    onSuccess: (data: any) => {
-      setAllProduct(data);
-    },
+    queryKey: ["user"],
+    queryFn: () => axios.get("/api/v1/users/get-all").then((res) => res.data),
   });
-
   return (
     <Card
       bg="white"
@@ -95,7 +125,7 @@ const Product = () => {
         borderBottom="0.5px solid #BFBFBF"
       >
         <Heading fontWeight={500} fontSize="20px">
-          List of Product
+          List of Users
         </Heading>
         <Stack direction="row" spacing={4}>
           <Button
@@ -108,13 +138,13 @@ const Product = () => {
           </Button>
           <Button
             as={Link}
-            to="/products/create"
+            to="/users/create"
             bg="primary.200"
             color="white"
             colorScheme="yellow"
             leftIcon={<Icon as={AiOutlinePlusCircle} />}
           >
-            New Product
+            New user
           </Button>
         </Stack>
       </Flex>
@@ -128,8 +158,9 @@ const Product = () => {
           <Datatable data={data} columns={columns} />
         )}
       </CardBody>
+      <View onClose={onClose} isOpen={isOpen} heading="User info" />
     </Card>
   );
 };
 
-export default Product;
+export default User;

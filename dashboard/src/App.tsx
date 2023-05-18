@@ -1,35 +1,51 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Login from "./pages/auth/Login";
+import Dashboard from "./pages/dashboard/Dashboard";
+import MainLayout from "./layouts/MainLayout";
+import NotFound from "./components/common/NotFound";
+import PersistLogin from "./components/PersistLogin";
+import AuthLayout from "./layouts/AuthLayout";
+import Product from "./pages/products/Product";
+import User from "./pages/users/User";
+import NewUser from "./pages/users/NewUser";
+import UpdateUser from "./pages/users/UpdateUser";
+import NewProduct from "./pages/products/NewProduct";
+import UpdateProduct from "./pages/products/UpdateProduct";
+import Categorys from "./pages/category/Categorys";
+import NewCategory from "./pages/category/NewCategory";
+import UpdateCategory from "./pages/category/UpdateCategory";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+const App = () => {
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <BrowserRouter>
+      <Routes>
+        <Route element={<PersistLogin />}>
+          <Route path="/" element={<MainLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="users">
+              <Route index element={<User />} />
+              <Route path="create" element={<NewUser />} />
+              <Route path="update/:uuid" element={<UpdateUser />} />
+            </Route>
+            <Route path="products">
+              <Route index element={<Product />} />
+              <Route path="create" element={<NewProduct />} />
+              <Route path="update/:uuid" element={<UpdateProduct />} />
+            </Route>
+            <Route path="categorys">
+              <Route index element={<Categorys />} />
+              <Route path="create" element={<NewCategory />} />
+              <Route path="update/:uuid" element={<UpdateCategory />} />
+            </Route>
+          </Route>
+        </Route>
+        <Route path="/login" element={<AuthLayout />}>
+          <Route index element={<Login />} />
+        </Route>
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
-export default App
+export default App;
