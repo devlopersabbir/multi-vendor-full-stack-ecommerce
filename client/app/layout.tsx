@@ -1,6 +1,8 @@
 "use client";
 
 import { ChakraProvider } from "@chakra-ui/react";
+import Header from "./components/header/Header";
+import Footer from "./components/footer/Footer";
 
 interface IRootLayout {
   children: React.ReactNode;
@@ -23,7 +25,11 @@ const RootLayout = ({ children }: IRootLayout) => {
       </head>
       <body>
         <main>
-          <ChakraProvider>{children}</ChakraProvider>
+          <ChakraProvider>
+            <Header />
+            {children}
+            <Footer />
+          </ChakraProvider>
         </main>
       </body>
     </html>
