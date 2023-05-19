@@ -38,7 +38,7 @@ const Hero = () => {
             </Button>
           </VStack>
           <Flex justify="flex-end" w="50%">
-            <Image w="72" src="banner/model.png" />
+            <Image w="72" src="banner/model.png" alt="hero section image" />
           </Flex>
         </Flex>
       </MainContainer>

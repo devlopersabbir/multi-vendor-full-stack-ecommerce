@@ -14,8 +14,8 @@ import Link from "next/link";
 const Menu = () => {
   return (
     <Stack flexDir="row" gap={4} align="center">
-      {NAV_ITEMS.map((navItem) => (
-        <Box key={navItem.label} mt={2}>
+      {NAV_ITEMS.map((navItem, index: number) => (
+        <Box key={index} mt={2}>
           <Popover trigger={"hover"} placement={"bottom-start"}>
             <PopoverTrigger>
               <Text
@@ -41,8 +41,9 @@ const Menu = () => {
                 minW={"sm"}
               >
                 <Stack>
-                  {navItem.children.map((child) => (
+                  {navItem.children.map((child, i: number) => (
                     <Box
+                      key={i}
                       as={Link}
                       href={child?.href}
                       role={"group"}
