@@ -1,6 +1,15 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client";
+import MainContainer from "./components/container/MainContainer";
+import Hero from "./components/home/hero/Hero";
+import TodayBest from "./components/home/todayBest/TodayBest";
+import TopCategory from "./components/home/topcategory/TopCategory";
 
 export default function Home() {
-  return <h1>hello world</h1>;
+  return (
+    <>
+      <Hero />
+      <TopCategory />
+      <TodayBest />
+    </>
+  );
 }

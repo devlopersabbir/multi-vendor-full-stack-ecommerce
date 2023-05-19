@@ -1,8 +1,10 @@
 "use client";
 
-import { ChakraProvider } from "@chakra-ui/react";
+import { ChakraProvider, Container } from "@chakra-ui/react";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
+import theme from "./theme/chakra";
+import WithSubnavigation from "./components/header/main/MainHeader";
 
 interface IRootLayout {
   children: React.ReactNode;
@@ -24,8 +26,8 @@ const RootLayout = ({ children }: IRootLayout) => {
         <meta name="author" content="Sabbir Hossain Shuvo" />
       </head>
       <body>
-        <main>
-          <ChakraProvider>
+        <main style={{ width: "100%" }}>
+          <ChakraProvider theme={theme}>
             <Header />
             {children}
             <Footer />
