@@ -1,13 +1,12 @@
 import React from "react";
 import MainContainer from "../../container/MainContainer";
 import { Flex, HStack, Heading, Image, Stack } from "@chakra-ui/react";
+import Headings from "../../common/Headings";
 
 const TopCategory = () => {
   return (
-    <MainContainer px={2} my={14}>
-      <Heading fontSize="2xl" fontWeight="bold" color="black">
-        Shop Our Top Categories
-      </Heading>
+    <MainContainer px={2}>
+      <Headings text="Shop Our Top Categories" />
       <HStack mt={8} gap={3} flexDir="row">
         {[0, 1, 2, 3, 4, 5].map((_, i) => (
           <Flex
