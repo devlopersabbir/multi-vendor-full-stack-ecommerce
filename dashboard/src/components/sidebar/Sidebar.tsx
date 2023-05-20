@@ -6,7 +6,6 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { RiProductHuntLine } from "react-icons/ri";
 import { RxDashboard } from "react-icons/rx";
 import { TfiWorld } from "react-icons/tfi";
-
 import SidebarItem from "./SidebarItem";
 import { BiCategory } from "react-icons/bi";
 
@@ -95,7 +94,7 @@ const Sidebar = () => {
           icon={<Icon as={TfiWorld} fontSize="24px" />}
           text="Website"
           submenu={[
-            { text: "Logo & Others", link: "/website/logo_others" },
+            { text: "Logo & Others", link: "/website" },
             { text: "Package", link: "/website/package" },
             { text: "Testimonial", link: "/website/testimonial" },
             { text: "Useful Articles", link: "/website/article" },

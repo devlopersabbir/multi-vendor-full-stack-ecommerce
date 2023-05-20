@@ -14,6 +14,7 @@ import UpdateProduct from "./pages/products/UpdateProduct";
 import Categorys from "./pages/category/Categorys";
 import NewCategory from "./pages/category/NewCategory";
 import UpdateCategory from "./pages/category/UpdateCategory";
+import LogoAndOthers from "./pages/websites/logoAndOthers/LogoAndOthers";
 
 const App = () => {
   return (
@@ -36,6 +37,10 @@ const App = () => {
               <Route index element={<Categorys />} />
               <Route path="create" element={<NewCategory />} />
               <Route path="update/:uuid" element={<UpdateCategory />} />
+            </Route>
+            {/** for website routes */}
+            <Route path="website">
+              <Route index element={<LogoAndOthers />} />
             </Route>
           </Route>
         </Route>

@@ -1,10 +1,11 @@
 "use client";
 
-import { ChakraProvider, Container } from "@chakra-ui/react";
+import { ChakraProvider, ColorModeScript } from "@chakra-ui/react";
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import theme from "./theme/chakra";
-import WithSubnavigation from "./components/header/main/MainHeader";
+import { Toaster } from "react-hot-toast";
+import Mode from "./theme/Mode";
 
 interface IRootLayout {
   children: React.ReactNode;
@@ -28,6 +29,9 @@ const RootLayout = ({ children }: IRootLayout) => {
       <body>
         <main style={{ width: "100%" }}>
           <ChakraProvider theme={theme}>
+            <Mode />
+            <ColorModeScript initialColorMode="light" />
+            <Toaster position="top-center" reverseOrder={false} />
             <Header />
             {children}
             <Footer />
