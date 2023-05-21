@@ -33,3 +33,11 @@ export const NAV_ITEMS: Array<NavItem> = [
     href: "/delivery",
   },
 ];
+
+export const productImage = [
+  { uuid: 0, image: "/products/1.png" },
+  { uuid: 1, image: "/products/2.png" },
+  { uuid: 2, image: "/products/3.png" },
+  { uuid: 3, image: "/products/4.png" },
+  { uuid: 4, image: "/products/5.png" },
+];
