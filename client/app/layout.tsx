@@ -6,6 +6,8 @@ import Footer from "./components/footer/Footer";
 import theme from "./theme/chakra";
 import { Toaster } from "react-hot-toast";
 import Mode from "./theme/Mode";
+import "aos/dist/aos.css";
+import "pure-react-carousel/dist/react-carousel.es.css";
 
 interface IRootLayout {
   children: React.ReactNode;

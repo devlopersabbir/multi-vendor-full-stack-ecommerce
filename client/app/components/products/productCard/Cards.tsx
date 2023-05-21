@@ -10,6 +10,7 @@ import {
 } from "@chakra-ui/react";
 import React from "react";
 import { BsStar, BsStarFill, BsStarHalf } from "react-icons/bs";
+import Rating from "../../common/Rating";
 
 const Cards = () => {
   return (
@@ -41,37 +42,7 @@ const Cards = () => {
         <Text textAlign="left" fontSize="md" fontWeight="light">
           short description
         </Text>
-        <HStack>
-          {Array(5)
-            .fill("")
-            .map((_, i) => {
-              const roundedRating = Math.round(3.5 * 2) / 2;
-              if (roundedRating - i >= 1) {
-                return (
-                  <BsStarFill
-                    key={i}
-                    style={{ marginLeft: "1" }}
-                    color={i < 4.2 ? "tomato" : "gray.300"}
-                  />
-                );
-              }
-              if (roundedRating - i === 0.5) {
-                return (
-                  <BsStarHalf
-                    color="tomato"
-                    key={i}
-                    style={{ marginLeft: "1" }}
-                  />
-                );
-              }
-              return (
-                <BsStar color="tomato" key={i} style={{ marginLeft: "1" }} />
-              );
-            })}
-          <Text fontSize="md" fontWeight="bold">
-            (12)
-          </Text>
-        </HStack>
+        <Rating />
         <Button
           rounded="full"
           borderColor="primary"
