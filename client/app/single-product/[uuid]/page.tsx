@@ -10,15 +10,25 @@ import {
   HStack,
   Heading,
   Icon,
+  IconButton,
+  Input,
+  InputGroup,
+  InputLeftElement,
+  InputRightElement,
   Stack,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import React from "react";
-import { MdDeliveryDining } from "react-icons/md";
+import React, { useState } from "react";
+import { TbTruckDelivery } from "react-icons/tb";
 import ProductPreviewSlider from "../ProductPreviewSlider";
+import { BiCalendarEvent, BiCart, BiMinus, BiPlus } from "react-icons/bi";
+import { toast } from "react-hot-toast";
+import { BsCart2 } from "react-icons/bs";
 
 const SingleProduct = () => {
+  const [quantity, setQuantity] = useState<number>(0);
+  const [quantityCount, setQuantityCount] = useState<number>(1);
   return (
     <MainContainer px={2} my={10}>
       <Breadcrumbs />
@@ -26,32 +36,105 @@ const SingleProduct = () => {
         <Box w="50%">
           <ProductPreviewSlider />
         </Box>
-        <Stack w="50%">
+        <Stack w="50%" align="flex-start" gap={3}>
           {/* title and short description */}
-          <VStack>
-            <Heading>Airpod Max</Heading>
-            <Text>
+          <VStack align="flex-start">
+            <Heading fontSize="4xl" color="gray.800">
+              Airpod Max
+            </Heading>
+            <Text fontSize="md" fontWeight="normal">
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
               quisquam libero beatae commodi atque eius?
             </Text>
             <Rating numberOfRating={11} rating={2.5} />
           </VStack>
-          <Divider my={3} />
+          <Divider />
           {/* price and message */}
-          <VStack>
-            <Heading>$553 or 99.99/month</Heading>
-            <Text>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.{" "}
+          <VStack align="flex-start">
+            <Heading color="gray.800" fontWeight="bold" fontSize="3xl">
+              $553 or 99.99/month
+            </Heading>
+            <Text fontSize="md" fontWeight="normal">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
             </Text>
           </VStack>
+          {/* choose size */}
+          <VStack align="flex-start" gap={1}>
+            <Heading color="gray.800" fontWeight="bold" fontSize="3xl">
+              Choose a size
+            </Heading>
+            <HStack>
+              <Button border="2px" borderColor="primary" px={1}>
+                XL
+              </Button>
+              <Button border="2px" borderColor="primary" px={1}>
+                XXL
+              </Button>
+              <Button border="2px" borderColor="primary" px={1}>
+                LG
+              </Button>
+              <Button border="2px" borderColor="primary" px={1}>
+                L
+              </Button>
+              <Button border="2px" borderColor="primary" px={1}>
+                M
+              </Button>
+            </HStack>
+          </VStack>
+          <Divider />
           {/* product quantity */}
-          <HStack>
-            <Button>Fuck</Button>
-            <Text>
-              Only <span style={{ color: "green" }}>12 items</span> left!
+          <HStack align="center" spacing={4}>
+            <InputGroup textAlign="center" w="32" bg="gray.50" rounded="full">
+              <InputLeftElement>
+                <IconButton
+                  bg="none"
+                  color="primary"
+                  rounded="full"
+                  onClick={() => {
+                    if (quantityCount <= 1)
+                      return toast.error("You can't decriess less then 1!");
+                    setQuantityCount(quantityCount - 1);
+                  }}
+                  icon={<BiMinus size="24px" />}
+                  aria-label="decrement"
+                />
+              </InputLeftElement>
+              <Input
+                p={2}
+                variant="unstyled"
+                textAlign="center"
+                color="green"
+                fontWeight="bold"
+                type="number"
+                fontSize="xl"
+                onChange={(e: any) => setQuantityCount(e.target.value)}
+                defaultValue={quantityCount ?? 1}
+              />
+              <InputRightElement>
+                <IconButton
+                  onClick={() => {
+                    if (quantityCount >= 20)
+                      return toast.error("You can't incriess more then 20!");
+                    setQuantityCount(quantityCount + 1);
+                  }}
+                  bg="none"
+                  color="primary"
+                  rounded="full"
+                  aria-label="increment"
+                  icon={<BiPlus size="24px" />}
+                />
+              </InputRightElement>
+            </InputGroup>
+            <Text fontSize="md" fontWeight="normal">
+              Only{" "}
+              <span style={{ color: "green", fontWeight: "bold" }}>
+                12 items
+              </span>{" "}
+              left!
               <br /> Don't miss it
             </Text>
           </HStack>
+          <Divider />
           <HStack>
             <Button
               rounded="full"
@@ -75,29 +158,56 @@ const SingleProduct = () => {
               borderColor="primary"
               _hover={{ backgroundColor: "primary", color: "white" }}
               variant="outline"
+              rightIcon={<BsCart2 size="24" />}
             >
               Add to Card
             </Button>
           </HStack>
-          <VStack border="2px" boxShadow="sm">
-            <Stack>
-              <Icon as={MdDeliveryDining} />
-              <VStack>
-                <Heading>Free Delivery</Heading>
-                <Text textDecor="underline">
+          <VStack w="full" boxShadow="sm" align="flex-start">
+            <HStack
+              // w="full"
+              border="2px"
+              borderColor="gray.100"
+              spacing={3}
+              p={5}
+              rounded="md"
+              cursor="pointer"
+              shadow="md"
+              bg="gray.50"
+              align="flex-start"
+            >
+              <Icon color="tomato" as={TbTruckDelivery} fontSize="3xl" />
+              <VStack gap={1} align="flex-start">
+                <Heading fontSize="xl" fontWeight="semibold">
+                  Free Delivery
+                </Heading>
+                <Text textDecor="underline" fontSize="md" fontWeight="normal">
                   Enter your postal code for free delivery
                 </Text>
               </VStack>
-            </Stack>
-            <Stack>
-              <Icon as={MdDeliveryDining} />
-              <VStack>
-                <Heading>Free Delivery</Heading>
-                <Text textDecor="underline">
-                  Enter your postal code for free delivery
+            </HStack>
+            <HStack
+              // w="full"
+              border="2px"
+              borderColor="gray.100"
+              spacing={3}
+              p={5}
+              rounded="md"
+              cursor="pointer"
+              shadow="md"
+              bg="gray.50"
+              align="flex-start"
+            >
+              <Icon color="tomato" as={BiCalendarEvent} fontSize="3xl" />
+              <VStack gap={1} align="flex-start">
+                <Heading fontSize="xl" fontWeight="semibold">
+                  Return Delivery
+                </Heading>
+                <Text textDecor="underline" fontSize="md" fontWeight="normal">
+                  Free 30 days delivery return! Details here
                 </Text>
               </VStack>
-            </Stack>
+            </HStack>
           </VStack>
         </Stack>
       </Flex>

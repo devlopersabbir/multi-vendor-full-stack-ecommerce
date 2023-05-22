@@ -1,38 +1,46 @@
-import React from "react";
+import { useState } from "react";
 import {
   CarouselProvider,
   Slider,
   Slide,
-  ButtonBack,
-  ButtonNext,
   ImageWithZoom,
 } from "pure-react-carousel";
-import { Box, HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, HStack, Image, VStack } from "@chakra-ui/react";
 import { productImage } from "../utils/_data";
 
 const ProductPreviewSlider = () => {
+  const [selectedImage, setSelectedImage] = useState<number>(0);
   return (
-    <HStack>
-      <VStack>
-        <Text onClick={() => console.log("hello")}>1</Text>
-        <Text>2</Text>
-        <Text>3</Text>
-        <Text>4</Text>
+    <HStack gap={2}>
+      <VStack gap={1}>
+        {productImage &&
+          productImage.map((im: any, i: number) => (
+            <Image
+              bg="gray.50"
+              p={1}
+              rounded="md"
+              onClick={() => setSelectedImage(im?.uuid)}
+              objectFit="cover"
+              src={im?.image}
+              alt="image "
+              w="24"
+              h="24"
+            />
+          ))}
       </VStack>
-      <Box w="full">
+      <Box w="full" rounded="xl" bg="gray.50" overflow="hidden" shadow="md">
         <CarouselProvider
-          visibleSlides={2}
-          hasMasterSpinner={true}
+          visibleSlides={1}
           totalSlides={productImage.length}
-          step={3}
           naturalSlideWidth={400}
           naturalSlideHeight={500}
+          currentSlide={selectedImage ?? null}
         >
           <Slider>
             {productImage &&
               productImage.map((i: any, index: number) => (
                 <Slide index={index} key={index}>
-                  <ImageWithZoom alt="product" src={i.image} />
+                  <ImageWithZoom alt="product" src={i?.image} />
                 </Slide>
               ))}
           </Slider>

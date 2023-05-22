@@ -29,16 +29,16 @@ const RootLayout = ({ children }: IRootLayout) => {
         <meta name="author" content="Sabbir Hossain Shuvo" />
       </head>
       <body>
-        <main style={{ width: "100%" }}>
-          <ChakraProvider theme={theme}>
-            <Mode />
-            <ColorModeScript initialColorMode="light" />
-            <Toaster position="top-center" reverseOrder={false} />
-            <Header />
-            {children}
-            <Footer />
-          </ChakraProvider>
-        </main>
+        {/* <main style={{ width: "100%" }}> */}
+        <ChakraProvider theme={theme}>
+          <Mode />
+          <ColorModeScript initialColorMode="light" />
+          <Toaster position="top-center" reverseOrder={false} />
+          <Header />
+          {children}
+          <Footer />
+        </ChakraProvider>
+        {/* </main> */}
       </body>
     </html>
   );
