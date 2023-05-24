@@ -14,7 +14,7 @@ const PersistLogin = () => {
         await refresh();
       } catch (error: any) {
       } finally {
-        setLoading(false);
+        setLoading(false)
       }
     };
     !accessToken ? verifyRefreshToken() : setLoading(false);
