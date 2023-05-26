@@ -8,7 +8,6 @@ import { Toaster } from "react-hot-toast";
 import Mode from "./theme/Mode";
 import "aos/dist/aos.css";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import { useSelectedLayoutSegment } from "next/navigation";
 import { useRouter } from "next/router";
 
 interface IRootLayout {
@@ -36,7 +35,7 @@ const RootLayout = ({ children }: IRootLayout) => {
       </head>
       <body style={{ width: "100%", height: "100%" }}>
         <ChakraProvider theme={theme}>
-          <Mode />
+          {/* <Mode /> */}
           <ColorModeScript initialColorMode="light" />
           <Toaster position="top-center" reverseOrder={false} />
           {!isAuthPage ? <Header /> : null}

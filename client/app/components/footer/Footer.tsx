@@ -1,11 +1,12 @@
 import React from "react";
 import MainContainer from "../container/MainContainer";
-import { Grid, Heading, Stack } from "@chakra-ui/react";
+import { Grid, Heading, Stack, Text } from "@chakra-ui/react";
 
 const Footer = () => {
   return (
     <MainContainer px={2}>
-      <Grid templateColumns="repeat(5, 1fr)" gap={6} my={14}>
+      <Text textAlign="center">Footer</Text>
+      {/* <Grid templateColumns="repeat(5, 1fr)" gap={6} my={14}>
         <Stack>
           <Heading>Logo</Heading>
         </Stack>
@@ -21,7 +22,7 @@ const Footer = () => {
         <Stack>
           <Heading>Department</Heading>
         </Stack>
-      </Grid>
+      </Grid> */}
     </MainContainer>
   );
 };
