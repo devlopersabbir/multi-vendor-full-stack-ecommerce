@@ -5,20 +5,14 @@ import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
 import theme from "./theme/chakra";
 import { Toaster } from "react-hot-toast";
-import Mode from "./theme/Mode";
 import "aos/dist/aos.css";
 import "pure-react-carousel/dist/react-carousel.es.css";
-import { useRouter } from "next/router";
 
 interface IRootLayout {
   children: React.ReactNode;
 }
 
 const RootLayout = ({ children }: IRootLayout) => {
-  const router = useRouter();
-  console.log(router);
-  const isAuthPage = false;
-
   return (
     <html lang="en">
       <head>
@@ -38,9 +32,9 @@ const RootLayout = ({ children }: IRootLayout) => {
           {/* <Mode /> */}
           <ColorModeScript initialColorMode="light" />
           <Toaster position="top-center" reverseOrder={false} />
-          {!isAuthPage ? <Header /> : null}
+          <Header />
           {children}
-          {!isAuthPage ? <Footer /> : null}
+          <Footer />{" "}
         </ChakraProvider>
       </body>
     </html>

@@ -16,6 +16,7 @@ const ProductPreviewSlider = () => {
         {productImage &&
           productImage.map((im: any, i: number) => (
             <Image
+              key={i}
               bg="gray.50"
               p={1}
               rounded="md"

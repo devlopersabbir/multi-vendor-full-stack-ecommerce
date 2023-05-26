@@ -84,11 +84,11 @@ const SingleProduct = () => {
           <Divider />
           {/* product quantity */}
           <HStack align="center" spacing={4}>
-            <InputGroup textAlign="center" w="32" bg="gray.50" rounded="full">
-              <InputLeftElement>
+            <InputGroup w="32" rounded="full">
+              <InputLeftElement h="100%">
                 <IconButton
-                  bg="none"
-                  color="primary"
+                  h="full"
+                  variant="ghost"
                   rounded="full"
                   onClick={() => {
                     if (quantityCount <= 1)
@@ -100,38 +100,40 @@ const SingleProduct = () => {
                 />
               </InputLeftElement>
               <Input
-                p={2}
-                variant="unstyled"
-                textAlign="center"
-                color="green"
-                fontWeight="bold"
+                min={1}
+                max={20}
+                disabled={true}
                 type="number"
-                fontSize="xl"
-                onChange={(e: any) => setQuantityCount(e.target.value)}
+                onChange={(e: any) => {
+                  const value = parseInt(e.target.value);
+                  console.log(value);
+                  if (value >= 1 && value <= 20) {
+                    setQuantityCount(e.target.value);
+                  }
+                }}
                 defaultValue={quantityCount ?? 1}
               />
-              <InputRightElement>
+              <InputRightElement h="100%">
                 <IconButton
+                  h="full"
+                  variant="ghost"
+                  rounded="full"
                   onClick={() => {
                     if (quantityCount >= 20)
                       return toast.error("You can't incriess more then 20!");
                     setQuantityCount(quantityCount + 1);
                   }}
-                  bg="none"
-                  color="primary"
-                  rounded="full"
                   aria-label="increment"
                   icon={<BiPlus size="24px" />}
                 />
               </InputRightElement>
             </InputGroup>
             <Text fontSize="md" fontWeight="normal">
-              Only{" "}
+              Only
               <span style={{ color: "green", fontWeight: "bold" }}>
-                12 items
-              </span>{" "}
-              left!
-              <br /> Don't miss it
+                {" 12 items"}
+              </span>
+              left! Don't miss it
             </Text>
           </HStack>
           <Divider />
