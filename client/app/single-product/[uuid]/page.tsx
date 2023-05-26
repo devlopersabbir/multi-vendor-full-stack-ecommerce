@@ -129,11 +129,7 @@ const SingleProduct = () => {
               </InputRightElement>
             </InputGroup>
             <Text fontSize="md" fontWeight="normal">
-              Only
-              <span style={{ color: "green", fontWeight: "bold" }}>
-                {" 12 items"}
-              </span>
-              left! Don't miss it
+              {"Only left! Don't miss it"}
             </Text>
           </HStack>
           <Divider />
