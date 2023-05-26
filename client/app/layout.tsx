@@ -8,12 +8,18 @@ import { Toaster } from "react-hot-toast";
 import Mode from "./theme/Mode";
 import "aos/dist/aos.css";
 import "pure-react-carousel/dist/react-carousel.es.css";
+import { useSelectedLayoutSegment } from "next/navigation";
+import { useRouter } from "next/router";
 
 interface IRootLayout {
   children: React.ReactNode;
 }
 
 const RootLayout = ({ children }: IRootLayout) => {
+  const router = useRouter();
+  console.log(router);
+  const isAuthPage = false;
+
   return (
     <html lang="en">
       <head>
@@ -28,17 +34,15 @@ const RootLayout = ({ children }: IRootLayout) => {
         />
         <meta name="author" content="Sabbir Hossain Shuvo" />
       </head>
-      <body>
-        {/* <main style={{ width: "100%" }}> */}
+      <body style={{ width: "100%", height: "100%" }}>
         <ChakraProvider theme={theme}>
           <Mode />
           <ColorModeScript initialColorMode="light" />
           <Toaster position="top-center" reverseOrder={false} />
-          <Header />
+          {!isAuthPage ? <Header /> : null}
           {children}
-          <Footer />
+          {!isAuthPage ? <Footer /> : null}
         </ChakraProvider>
-        {/* </main> */}
       </body>
     </html>
   );
