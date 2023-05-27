@@ -7,10 +7,17 @@ import theme from "./theme/chakra";
 import { Toaster } from "react-hot-toast";
 import "aos/dist/aos.css";
 import "pure-react-carousel/dist/react-carousel.es.css";
+import { Metadata } from "next";
 
 interface IRootLayout {
   children: React.ReactNode;
 }
+
+export const metadata: Metadata = {
+  icons: {
+    icon: "favicon.ico",
+  },
+};
 
 const RootLayout = ({ children }: IRootLayout) => {
   return (
@@ -26,6 +33,7 @@ const RootLayout = ({ children }: IRootLayout) => {
           content="ecommerce, website, devlopersabbir, stsabbir, sabbirhossain, multi, multiVendor"
         />
         <meta name="author" content="Sabbir Hossain Shuvo" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
       </head>
       <body style={{ width: "100%", height: "100%" }}>
         <ChakraProvider theme={theme}>
